@@ -1,0 +1,46 @@
+Tema 1 - Structuri de Date
+Banda Magica - Liste dublu inlantuite, stive si cozi
+
+Structura benzii contine pozitia santinelei, si anume banda->L, si cea curenta a degetului, banda->crt. Strcutura listei dublu inlantuite va contine informatii de tip char (1 char), iar cea a cozii tot de tip char (char vector). Strutura stivei contine informatii de tip TLista2, prentu ca retine pozitia celulei actuale.
+
+Functia Add adauga la finalul listei o noua celula cu caracterul '#'. Lista este data ca parametrul si auxiliar se aloca o noua celula aux. In cazul alocarii corecte se modifica legaturile listei, ca sa fie legata de aux.
+
+*MOVE_LEFT
+Functia de tip MOVE_LEFT nu intoarce nimic si primeste ca parametru banda de parcurs. Ea testeaza daca pe pozitia anterioara degetului se afla santinela. Daca da, atunci functia nu face nimic, altfel pozitia curenta a degetului se schimba cu cea anterioara , adica devine banda->crt->pre.
+
+*MOVE_RIGHT
+Functia de tip MOVE_RIGHT nu intoarce nimic si primeste ca parametru banda de parcurs. Se verifica daca degetul se afla la finalul listei, daca da se afauga o noua celula, prin apelul functiei Add. Pe urma, degetul se muta pe pozitia urmatoare si devine banda->crt->urm.
+
+*MOVE_LEFT_CHAR
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda,informatia elementului pe care il cautam si fisierul unde se scriu informatiile de iesire, pentru a scrie mesajul de eroare in cazul in care e necesar. In primul rand, functia verifica daca elemntul pe care il cautam se afla la pozitia curenta a degetului. Daca da, se iese din functie. Altfel, vom parcurge printr-o variabila auxiliara lista inspre stanga de la momentul in care ne aflam prin intermediul acelui for. For-ul se opreste in momentul in care am ajuns la santinela. In for, se verifica daca pozitia la care ajungem in timpul parcurgerii contine informatia pe care o cautam, iar daca o contine atunci pozitia degetului se muta la pozitia acestuia si se incheie functia. Daca se iese din for, inseamna ca nu s-a gasit elementul , astfel, se scrie mesajul de eroare.
+
+*MOVE_RIGHT_CHAR
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda si informatia elemntului pe care il cautam. In primul rand, functia verifica daca elemntul pe care il cautam se afla la pozitia curenta a degetului. Daca da, se iese din functie. Altfel, vom parcurge ca la functia MOVE_LEFT_CHAR , numai ca inspre dreapta, mutandu-ne pe pozitiile urmatoare. Daca se gaseste informatia, degetul se muta pe pozitia respectiva si se iese din functie. Altfel, se adauga o noua celula prin intermediul functiei Add, iar degetul se muta pe aceasta noua celula creata.
+
+*INSERT_LEFT_CHAR
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda,informatia elementului pe care vrem  si fisierul unde se scriu informatiile de iesire, pentru a scrie mesajul de eroare in cazul in care e necesar. Mesajul de eroare apare daca pozitia curenta a degetului este cea de dupa santinela, adica primul element. Alocam celula pe care vrem sa o inseram la stanga dupa schimbam legaturile, astfel incat noul element sa se afle intre predecesorul lui p si p (p fiind pozitia in fata caruia voiam sa inseram elementul). In final, pozitia degetului se muta pe noua celula inserata. 
+
+
+*INSERT_RIGHT_CHAR
+Aceasta functie e asemanatoare cu INSERT_LEFT_CHAR numai ca nu are ca parametru si fisierul, deoarece ea nu este nevoita sa scrie nimic in el. Nu are niciun mesaj de eroare. Ce are in plus fata de INSERT_LEFT_CHAR este ca testeaza daca pozitia dupa care vrem sa inseram este la final. Daca da, atunci adaugam o noua celula cu functia Add. In final, pozitia curenta a degetului se muta pe celula creata. Daca ea este ultima celula creata si a fost facuta cu functia Add este necesar sa setam informatia din aceasta celula , ca sa nu mai fie #, astfel, ii dam valoarea x.
+
+*SHOW
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda si fisierul unde se scriu informatiile de iesire. Astfel, se ia o variabila de tip TLista2 ce porneste de la urmatorul element dupa santinela. Cat timp elemntul nu devine NULL se scriu elementele in fiser. In cazul in care elementul la care am ajuns in timpul parcurgerii este cel la care se afla degetul atunci acesta se afiseaza intre '|'. 
+
+*SHOW_CURRENT
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda si fisierul unde se scriu informatiile de iesire. Astfel, se scrie in fisier informatia de la pozitia actuala a degetului. 
+
+*REDO
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda si cele doua stive de REDO si UNDO. Luam o variabila auxiliara in care sa retinem pozitia curenta, pe care o adaugam in varful stivei UNDO. Preluam din stiva REDO vechea pozitie a degetului tot prin aceeasi variabila, pe care o reutilizam. Iar, in final schimbam pozitia curenta a degetului cu cea luata din stiva redo.
+
+*UNDO
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda si cele doua stive de UNDO si REDO. Luam o variabila auxiliara in care sa retinem pozitia curenta, pe care o adaugam in varful stivei REDO. Preluam din stiva UNDO vechea pozitie a degetului, tot prin aceeasi variabila, pe care o reutilizam. Iar, in final schimbam pozitia curenta a degetului cu cea luata din stiva undo.
+
+*WRITE_C
+Functia aceasta nu intoarce nimic si primeste ca parametrii banda si elementul pe care vrea sa il scrie. Astfel, informatia de la pozitia curenta a degetului devine noul element.
+
+Restul functiilor pe care nu le-am explicat au fost preluate din materia predata la laborator si la curs.
+
+In fisierul main.c se apeleaza functiile. In primul rand, se deschid fiserul de intrare si cel de iesire, se initializeaza stivele, coada, lista si structura de banda. Se citeste din fisier numarul de comenzi pe care trebuie sa le citim. Dupa, prin intermediul forului vom citi acele nr comenzi, pe rand din fisier. Stringul citit o sa il comparam pe rand cu numele comenzilor cunoscute a fi de tip UPDATE, pentru a fi adaugate in coada. Perechile de functii (MOVE_RIGHT_CHAR, MOVE_RIGHT) si (MOVE_LEFT_CHAR, MOVE_LEFT) trebuie testate intr-un mod anume. Pentru ca programul sa nu dubleze informatia, stringul mai lung, precum MOVE_LEFT_CHAR, trebuie testat primul, iar in else se testeaza perechea sa. Daca in fiser se intalnesc functiile de afisare, precum SHOW si SHOW_CURRENT, sau cele de tip UNDO/ REDO se apeleaza functiile. Daca se intalneste comanda EXECUTE, atunci scoatem o comanda din coada o comanda sa o apelam. Stringul scos din coada o sa fie comparat cu denumirile cunoscute, exact cum a fost comparat anterior la introducerea in coada. Dupa ce il gaseste se apeleaza functia. In cazul apelului functiei de WRITE_C, mai este nevoie si de eliberarea stivelor conform enuntului problemei, astfel, apelam functia POP pana ambele stive devin NULL. In cazul comenzilor MOVE_RIGHT si MOVE_LEFT inainte de a se executa comanda, se va adauga in stiva pozitia curenta a degetului pe banda pana a fi modificat. Cazul special in care comanda MOVE_LEFT este apelata de mai multe ori, una dupa alta, iar degetul se afla pe primul element din banda, este verificat prin salvarea pozitiei anterioare modificarii si compararea acesteia cu cea actualizata dupa apelarea functiei. Daca acestea sunt identice atunci se apeleaza functia UNDO. In final, se elibereaza toata memoria folosita si se inchid fisierele.
+
+Dupa rularea  programului, pe vmcheckerul local am primit punctaj maxim.

@@ -1,0 +1,28 @@
+In functie deargumentele date din terminal se parcurg anumiti pasi. Prima oara comparam sirul de caractere din terminal cu cel stiut de noi, astfel incat sa stim ce task se ruleaza.
+
+Task 1
+In cazul primului task, se preia din comanda din terminal si factorul sub forma unui sir de caractere, astfel convertim sirul la un numar cu functia atoi. Se deschid fisierele de intrare si de iesire cunocute din terminal si se verfica deschiderea lor corecta. Pe urma, se citesc primele date de intreare specifice fisierului ppm. Dupa se aloca memoria pentru matricea de pixeli si se citeste din fisier datele legate de culoare. Se apeleaza functia de constructie a arborelui, care are  ca parametrii matricea, marimea sa, pozitiile din matrice la care se afla functia(dupa ce matricea incepe a fi divizata), factorul pentru culoarea medie si nivelul elementelor din arbore. Se calculeaza cu funtiile specifice datele despre culori si apoi valoarfea medie a acestora. Functiile sunt create dupa formulele date, datele fiind de tip unsigned long long. Se aloca memoria pentru o frunza a arborelui si in functie de pragul calculat, daca acesta nu depaseste factorul atunci zona nu trebuie sa mai fie impartite, astfel i se atribuie info necesare tipului frunza si nivelul sau. Altfel, tipul sau devine 0, i se atribuie nivelul si se reapeleaza functie pentru fiecare fiu al sau. Nivelul fiilor sai creste cu unu si marimea se imparte la doi. Pentru zona 1, x si y raman in aceeasi pozitie, pentru zona 2 x se muta cu o jumatete de marime, pentru zona trei ambele se muta, iar pentru zona patru doar y. In final, functia returneaza nodul.
+
+Se apeleaza functiile pentru nr de niveluri, nr de frunze(adica numarul de zone nedivizate) si marimea celei mai mari zone nedivizata.
+
+Functia pentru numarul de frunze aduna intr un contor fiecare frunza gasita, pe fiecare ramura. Ea este reapelata recursiv, iar in momentul in care este gasita o frunza contor++. In final, se returneaza contor.
+
+Functia Nr_niv cauta frunza de pe nivelul cel mai mare, apelandu-se recursiv. Functia se foloseste de faptul ca fiecare nod in parte, datorita structurii are informatiile legate de nivel stocate. AStfel, este mai usor calculul nivelului. Dupa ce se iese din functie, se creste cu unu, deoarece numerotarea porneste de la zero, astfel sunt cu unu mai multe niveluri in arbore.
+
+Functia Big_zone gaseste zona cea mai mare , care a ramas nedivizata. Aceasta in arbore este simbolizata prin frunza de pe nivelul cel mai mic. AStfel, apelam o functie ce gaseste nivelul cel mai mic al unei frunze : Nr_nivminim, care este apelata recursiv si salveaza in max nivelul gasit mai mic pana la punctul respectiv. Dupa ce aflam acest nivel, facem 2^nivelului, si aflam de cate ori a fost impartita matricea pentru a fi realizata zona aceea. Dupa, impartim marimea totala la acest numar.
+
+In final, se elibereaza memoria si se inchid fisierele. Functia de eliberare memorie a arborelui elibereaza recursiv pentru ficare fiu in parte. 
+
+Task 2
+Cel de-al doilea task porneste identic ca task ul 1, citindu-se informatiile din  fisierele deschise si creandu-se matricea si arborele. Dupa, se initializeaza o coada pentru a ajuta la parcurgerea arborelui pe nivel. Se scrie in fisier marimea imaginii si apoi se apeleaza functia pentru parcurgerea pe nivel.
+
+Aceasta functie primeste ca parametrii arborele, fisierul de iesire si coada ce poate fi modificata. Se introduce in coada radacina arborelui, dupa se intra in while cat timp coada nu devi8ne vida. Se extrage din coada primul element, iar daca acesta este frunza se scriu in fisier conform enuntului informatiile sale. Daca nu este frunza, se introduc in coada toti fii sai in ordine, pentru ca la un moment dat sa se ajunga pe ficare ramura la o frunza.
+
+In final, se dezaloca memoria si se inchid fisierele.
+
+Task 3
+Se deschid fisierele, se citeste din fisierul de intrare binar marimea imaginii si se scrie in cel de iesire toate datele specifice unui fisier ppm. Se intializeaza coada pentru parcurgerea pe nivel a arborelui, matricea de pixeli si arborele, alocandu-se dinamic. Se citeste tipul si informatiile primul nod din fisier, daca este frunza sunt 0, daca nu toate datele culorilor. Daca radacina arborelui nu este frunza, atunci imaginea mai trebuie impartita astfel introducem in coada radacina si apelam functia de parcurgere pe nivel specifica taskului asta. Ea cat timp coada este nevida, extrage din coada primul element si ii atribuie fii nodului, apeland o alta functie Val_arb. Aceasta aloca un nod pentru arbore si infunctie de tipul sau citit din fisier ii atribuie din fisier informatiile citite, iar nivelul nodului este cu unu mai mare fata de cel dat ca parametru al tatalui sau.
+
+Dupa se apeleaza functia de constructie a imaginii, adica matricei de pixeli, care are ca parametrii matricea ce poate fi modificata, arborele, marimea si pozitiile la care ne afla in matrice. Daca nodul din arbore la care ne aflam este frunza, atunci scriem in matrice datele sale despre culor, de la coordonatele x si y pana la finalul patratului respectiv, adica x + size (marimea zonei care a ramas neimpartita). Daca nu, inseamna ca marimea pe care trebuie sa o completam in matrice trebuie sa fie mai mica, deci impartim la doi si reapelam functia penrtu fiecare zona noua in parte (adica pentru fiecare fiu in parte a nodului), coordonatele x si y modificandu-se in functie de zona, exact cum am eexplicat si la taskul 1. 
+
+In final, se dezaloca memoria si se inchid fisierele.

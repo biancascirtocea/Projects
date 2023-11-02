@@ -1,0 +1,6 @@
+Folosim o instrunctiune "for" care parcurge toate primele N numere, prin intermediul variabilei i.
+Daca numarul este divizibil cu ambele constante 7 si 11, denumite "Treat" si "Trick", atunci programul afiseaza "TrickOrTreat".
+Altfel, intra in "else" si testeaza daca numarul este divizibil numai cu 7 si atunci afiseaza "Treat".
+Altfel, testeaza daca este divizibil numai cu 11 si afiseaza "Trick".
+Daca numarul nu este divizibil nici cu 7 , nici cu 11, programul tipareste numarul.
+Dupa ce programul a parcurs if-urile testeaza daca a ajuns la ultimul numar , iar daca nu tipareste un spatiu. 

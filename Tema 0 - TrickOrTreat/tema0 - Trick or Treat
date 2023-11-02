@@ -1,0 +1,19 @@
+Tema 0 - TrickOrTreat
+
+Aceasta este o temă de “încălzire”. Scopul acesteia este să vă obișnuiți cu infrastructura de testare automată a temelor. Această infrastructură va fi folosită la toate temele ulterioare.
+
+
+Cerință
+Scrieți un program care citește de la standard input (tastatură) un număr natural, N. Pentru toate valorile din intervalul [1, N], programul va afișa, separate printr-un spațiu ( ):
+
+cuvântul Trick dacă valoarea curentă este divizibilă cu 7
+cuvântul Treat dacă valoarea curentă este divizibilă cu 11
+cuvântul TrickOrTreat dacă valoarea curentă este divizibilă cu 7 și cu 11
+valoarea curentă, atunci când aceasta nu este divizibilă cu 7 sau 11
+
+Exemplu utilizare:
+./tema0
+Introduceti valoarea numarului natural N:
+11
+1 2 3 4 5 6 Trick 8 9 10 Treat
+
