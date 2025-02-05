@@ -1,0 +1,77 @@
+# Tema2 APD Scirtocea Bianca-Ioana 331CB 
+# Implementare Peer-to-Peer pentru Partajare de Fisiere
+
+Tema implementează un sistem distribuit de tip Peer-to-Peer pentru partajarea fișierelor, folosind MPI (Message Passing Interface) și thread-uri. Proiectul este împărțit în mai multe module, fiecare contribuind la funcționalitatea generală.
+
+## 1. Structuri de Date
+
+Fișierul tema2.h definește structurile esențiale utilizate în implementare. Acestea includ:
+
+- **Structura file**: Reprezintă un fișier cu numele său (fileName), numărul de segmente (chunksNumber) și un buffer care conține hash-urile fiecărui segment.
+
+- **Structura swarm**: Reprezintă un grup de peers care partajează un fișier, incluzând detalii despre fișierul asociat și o listă de peers care îl dețin.
+
+- **Structura tracker**: Stochează starea globală a rețelei, incluzând lista swarm-urilor și starea fiecărui peer.
+
+- **Structura peer**: Înregistrează fișierele deținute, fișierele lipsă și alte informații relevante pentru fiecare peer.
+
+- **Structura request_handler**: Este folosită în thread-ul de descărcare pentru a gestiona starea descărcării fișierelor, inclusiv indexul segmentelor curente și swarm-ul activ pentru fiecare fișier.
+
+- **Structuri pentru mesaje**:
+  - first_request_structure -> pentru cereri inițiale de swarm-uri.
+  - swarm_reply -> pentru răspunsurile tracker-ului către peers.
+  - segment_request și segment_reply -> pentru cereri și răspunsuri la nivel de segment.
+
+## 2. Funcționalitatea Tracker-ului
+
+Funcția tracker este executată de procesul cu rank-ul 0 și gestionează întreaga rețea P2P. Tracker-ul:
+
+- **Primește informații despre fișierele cunoscute**: Prin receive_all_known_files_from_peers, tracker-ul construiește structurile de swarm-uri pe baza informațiilor primite de la peers.
+
+- **Răspunde cererilor**:
+  - La cereri de tip SWARM_REQUEST, folosește funcția send_swarm_reply pentru a trimite informații despre swarm-ul asociat unui fișier.
+  - Actualizează starea fișierelor și swarm-urilor în funcție de mesajele SWARM_FILE_RECEIVED și ALL_FILES_DOWNLOADED.
+
+- **Monitorizează progresul**: Verifică dacă toți peers au descărcat toate fișierele și trimite semnale pentru închiderea rețelei.
+
+## 3. Funcționalitatea Peer-ului
+
+Funcția peer este responsabilă pentru operațiunile efectuate de fiecare peer în rețea. Peers sunt inițializați pe baza fișierelor locale. Aceștia:
+
+- **Transmit informațiile despre fișierele lor**: Trimit hash-urile fișierelor cunoscute către tracker.
+
+- **Thread-uri paralele**:
+  - **Thread-ul de descărcare** (download_thread_func): Solicita segmente de la alți peers, reconstruiește fișierele descărcate și trimite actualizări tracker-ului la fiecare 10 segmente descărcate.
+  - **Thread-ul de încărcare** (upload_thread_func): Răspunde cererilor de segmente primite de la alți peers.
+
+- **Finalizarea**: După descărcarea tuturor fișierelor, un peer notifică tracker-ul și închide thread-ul de descărcare, lăsând activ doar thread-ul de încărcare.
+
+## 4. Mesaje
+
+Mesajele între procese folosesc MPI. Sistemul utilizează diferite tipuri de mesaje pentru a realiza operațiuni specifice:
+
+- SWARM_REQUEST și SWARM_REPLY pentru obținerea informațiilor despre swarm-uri.
+- SEGMENT_REQUEST și SEGMENT_REPLY pentru descărcarea segmentelor.
+- SWARM_FILE_RECEIVED și ALL_FILES_DOWNLOADED pentru a notifica progresul.
+
+Fiecare mesaj este structurat pentru a conține toate informațiile necesare schimbului eficient de date.
+
+## 5. 
+
+
+Funcții Auxiliare
+
+- **Gestionarea swarm-urilor**: Funcții precum init_swarm, file_name_in_swarm_list și add_element_to_list facilitează operațiile asupra swarm-urilor.
+
+- **Procesarea cererilor și răspunsurilor**:
+  - send_segment_reply -> răspunde cererilor de segmente.
+  - receive_segment_reply -> reconstruiește răspunsurile primite și validează hash-urile segmentelor.
+
+- **Scrierea fișierelor reconstruite**: create_one_file_and_write scrie fișierele descărcate local, utilizând datele obținute din segmente.
+
+## -----------------------------------------------------------------------------
+
+Programul este lansat folosind MPI, iar procesele sunt împărțite între tracker și peers. Funcția main inițializează MPI, determină tipul procesului (tracker sau peer) și apelează funcția corespunzătoare (tracker sau peer).
+
+La final, toate procesele finalizează execuția folosind MPI_Finalize.
+

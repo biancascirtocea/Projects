@@ -1,0 +1,61 @@
+% Scirtocea Bianca 331CB
+% Multiple variabile globale
+variable x1 ::= { a, b };
+variable x2 ::= { c, d };
+variable y1 ::= { a, b };
+variable y2 ::= { c };
+
+% Gramatica cu multiple variabile locale - GIC
+grammar_test4 ::= Grammar (
+    nonterminals :: { S, A, B, C } ;
+    alphabet :: { a, b, c, d } ;
+    start_symbol :: S ;
+    
+    S -> y1&A | x1&B ;
+    A -> y2&B | C ;
+    B -> x2&C | e ;
+    C -> a&B | b ;
+) ;;
+
+% Gramatica cu reguli complexe GIC
+grammar_test1 ::= Grammar (
+    nonterminals :: { S, A, B, C, D } ;
+    alphabet :: { a, b, c } ;
+    start_symbol :: S ;
+    
+    S -> A&B&C | B&C&D ;
+    A -> a&A&a | e ;
+    B -> b&B | b ;
+    C -> c&C&c | c ;
+    D -> a&b&c | b&c&a ;
+) ;;
+
+% Automat complex cu multiple stari si tranzitii
+automata_test3 ::= FiniteAutomaton (
+    alphabet :: { a, b, c } ;
+    states :: { q0, q1, q2, q3, q4 } ;
+    final_states :: { q2, q4 } ;
+    initial_state :: q0 ;
+    
+    q0 -> (
+        a -> q1 ;
+        b -> q2 ;
+        c -> q3 ;
+    ) ;
+    q1 -> (
+        a -> q2 ;
+        b -> q3 ;
+    ) ;
+    q2 -> (
+        c -> q4 ;
+    ) ;
+    q3 -> (
+        a -> q4 ;
+        b -> q2 ;
+    ) ;
+    q4 -> (
+        a -> q4 ;
+        b -> q4 ;
+        c -> q4 ;
+    ) ;
+) ;;

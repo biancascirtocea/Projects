@@ -1,0 +1,6 @@
+Binary-database:
+	SpeishFlag{PDZXvI70wOD7c9zqxenZIeeL4Kwyl8S6}
+Lcg-otp:
+	SpeishFlag{NNSCnlpTxLsezBdx0Gr5TK69eSuSwON0}
+Unexpected-CEO:
+	SpeishFlag{D3ZpcphcOcPXnXsDGg9mg3Vkr1MrFf81}
